@@ -1,6 +1,6 @@
+import '../style/App.css';
 import React from 'react';
 import {
-  Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -28,16 +28,15 @@ export default class TopNav extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="TopNav">
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">YT Share</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <Form>
                   <FormGroup>
-                    <Input type="text" placeholder="Search Session" />
+                    <Input type="text" placeholder="Search for a Session" />
                   </FormGroup>
                 </Form>
               </NavItem>
@@ -45,7 +44,6 @@ export default class TopNav extends React.Component {
                 <NavLink href="/NewSession">Create a Session</NavLink>
               </NavItem>
             </Nav>
-          </Collapse>
         </Navbar>
       </div>
     );
