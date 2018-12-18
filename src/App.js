@@ -3,12 +3,12 @@ import axios from 'axios';
 import Pusher from 'pusher-js';
 import ChatList from './components/ChatList';
 import ChatBox from './components/ChatBox';
-import './style/App.css';
 import TopNav from './components/TopNav';
 import SearchBar from './components/SearchBar.jsx';
 import YTSearch from 'youtube-api-search';
 import VideoList from './components/VideoList.jsx';
 import VideoPlayer from './components/VideoPlayer';
+import './style/App.css';
 
 require('dotenv').config();
 

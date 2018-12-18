@@ -10,7 +10,13 @@ class SearchBar extends React.Component {
 
     onInputChange(event) {
         this.setState({ term: event.target.value });
-        this.props.onSearchTermChange(event.target.value);
+    }
+
+    onEnter(event) {
+        if (event.key === "Enter") {
+            this.props.onSearchTermChange(event.target.value);
+            this.setState({ term: '' });
+        }
     }
 
     render() {
@@ -20,6 +26,7 @@ class SearchBar extends React.Component {
                     placeholder="Search YouTube"
                     value={this.state.term}
                     onChange={this.onInputChange}
+                    onKeyDown={this.onEnter.bind(this)}
                 />
             </div>
         );
