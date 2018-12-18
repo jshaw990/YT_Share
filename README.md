@@ -1,5 +1,5 @@
 # Final Project
-A web application in which registered and unregistered users join “rooms” and post youtube videos which get added to a blind queue, with vote to skip functionality, live chat, and the ability to sync the timestamp across users using the host as a reference. Users can enjoy videos with their friends, as well as the community. 
+
 
 ### Our Tech Stack
 * Front End:
