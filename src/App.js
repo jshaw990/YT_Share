@@ -10,8 +10,10 @@ import YTSearch from 'youtube-api-search';
 import VideoList from './components/VideoList.jsx';
 import VideoPlayer from './components/VideoPlayer';
 
-const API_KEY = 'AIzaSyD7NeGO7qgv22hZofDOgTD67K1e5w45j_M';
+require('dotenv').config();
 
+const API_KEY = process.env.REACT_APP_YOUTUBE_API;
+console.log("YT KEY##: ", API_KEY);
 
 class App extends Component {
   constructor(props) {
