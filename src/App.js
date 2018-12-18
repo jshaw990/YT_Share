@@ -5,6 +5,13 @@ import ChatList from './components/ChatList';
 import ChatBox from './components/ChatBox';
 import './style/App.css';
 import TopNav from './components/TopNav';
+import SearchBar from './components/SearchBar.jsx';
+import YTSearch from 'youtube-api-search';
+import VideoList from './components/VideoList.jsx';
+import VideoPlayer from './components/VideoPlayer';
+
+const API_KEY = 'AIzaSyD7NeGO7qgv22hZofDOgTD67K1e5w45j_M';
+
 
 class App extends Component {
   constructor(props) {
@@ -12,8 +19,22 @@ class App extends Component {
     this.state = {
       text: '',
       username: '',
-      chats: []
+      chats: [],
+      videos: [],
+      selectedVideo: null
     };
+
+    this.videoSearch('React Tutorials');
+  }
+
+  videoSearch(searchTerm) {
+    YTSearch({key: API_KEY, term: searchTerm}, (data) => {
+      console.log(data);
+        this.setState({
+          videos: data,
+          selectedVideo: data[0]
+        });
+    });
   }
 
   componentDidMount() {
@@ -48,6 +69,10 @@ class App extends Component {
         <header className="App-header">
           <TopNav/>
         </header>
+        <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)}/>
+        <VideoPlayer video={this.state.selectedVideo}/>
+        <VideoList onVideoSelect={userSelected => this.setState({selectedVideo: userSelected})}
+                   videos={this.state.videos} />
         <section>
           <ChatList chats={this.state.chats} />
           <ChatBox
