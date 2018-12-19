@@ -21,6 +21,11 @@ function randomName() {
   return adjective + noun;
 }
 
+function randomNum() {
+  let ranNum = Math.random.toString(36).substring(7);
+  return ranNum;
+}
+
 function randomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
