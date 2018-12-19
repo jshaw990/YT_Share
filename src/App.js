@@ -6,7 +6,8 @@ import VideoList from './components/VideoList.jsx';
 import VideoPlayer from './components/VideoPlayer';
 import './style/App.css';
 import Messages from "./Messages";
-import Input from "./Input"
+import Input from "./Input";
+import Greeting from './components/Greeting.jsx';
 
 
 require('dotenv').config();
@@ -60,7 +61,7 @@ class App extends Component {
       this.setState({messages});
     });
 
-    this.videoSearch('React Tutorials');
+    this.videoSearch('James Bond');
   }
   onSendMessage = (message) => {
     this.drone.publish({
@@ -85,6 +86,7 @@ class App extends Component {
         <header className="App-header">
           <TopNav />
         </header>
+        <Greeting />
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
         <VideoPlayer video={this.state.selectedVideo} />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}

@@ -1,0 +1,16 @@
+#top {
+    background-color: lightgray;
+}
+
+#root {
+    width: 95%;
+    margin: auto;
+    padding: 0px;
+    background-color: white;
+}
+
+.video-detail {
+    width: 98%;
+    margin: auto;
+    padding: 10px 5px;
+}

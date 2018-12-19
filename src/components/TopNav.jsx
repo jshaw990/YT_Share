@@ -29,7 +29,7 @@ export default class TopNav extends React.Component {
   render() {
     return (
       <div className="TopNav">
-        <Navbar color="light" light expand="md">
+        <Navbar color="dark" dark expand="md">
           <NavbarBrand href="/">YT Share</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
             <Nav className="ml-auto" navbar>
