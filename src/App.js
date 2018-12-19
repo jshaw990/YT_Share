@@ -13,7 +13,6 @@ import './style/App.css';
 require('dotenv').config();
 
 const API_KEY = process.env.REACT_APP_YOUTUBE_API;
-console.log("YT KEY##: ", API_KEY);
 
 class App extends Component {
   constructor(props) {
