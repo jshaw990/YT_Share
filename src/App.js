@@ -8,7 +8,6 @@ import './style/App.css';
 import Messages from "./Messages";
 import Input from "./Input"
 
-
 require('dotenv').config();
 
 const API_KEY = process.env.REACT_APP_YOUTUBE_API;
@@ -50,6 +49,22 @@ class App extends Component {
     });
     const room = this.drone.subscribe("observable-room");
     room.on('data', (data, member) => {
+      if (
+        member.clientData.username === this.state.member.username
+      ) return;
+      console.log('DATA', data)
+      if (data.type === "videoSearch") {
+        const { videos, selectedVideo } = data;
+        return this.setState({
+          videos,
+          selectedVideo
+        })
+      }
+
+      if (data.type === "videoStateChange") {
+        if (!this.player || typeof this.player.seekTo !== 'function') return;
+        return this.player.seekTo(data.time)
+      }
       const messages = this.state.messages;
       messages.push({member, text: data});
       this.setState({messages});
@@ -57,6 +72,7 @@ class App extends Component {
 
     this.videoSearch('React Tutorials');
   }
+
   onSendMessage = (message) => {
     this.drone.publish({
       room: "observable-room",
@@ -64,16 +80,36 @@ class App extends Component {
     });
   }
 
+  sendVideoSearch = (message) => {
+    this.drone.publish({room: "observable-room", message })
+  }
+  
+  handleVideoStateChange = ({ data, target }) => {
+    const time = target.getCurrentTime();
+    this.drone.publish({
+      room: "observable-room",
+      message: {
+        type: "videoStateChange",
+        time
+      }
+    })
+  }
   videoSearch(searchTerm) {
     YTSearch({ key: API_KEY, term: searchTerm }, (data) => {
-      console.log(data);
-      this.setState({
+      const searchData = {
         videos: data,
         selectedVideo: data[0]
-      });
+      };
+      this.setState(searchData);
+      searchData.type = "videoSearch"
+      this.sendVideoSearch(searchData)
     });
   }
 
+   videoReady = ({ target }) => {
+     console.log('TARGET RTEADY', target)
+      this.player = target;
+   }
   render() {
     return (
       <div className="App">
@@ -81,7 +117,11 @@ class App extends Component {
           <TopNav />
         </header>
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
-        <VideoPlayer video={this.state.selectedVideo} />
+        <VideoPlayer
+          video={this.state.selectedVideo}
+          onStateChange={this.handleVideoStateChange}
+          onReady={this.videoReady}  
+        />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
           videos={this.state.videos} />
         <Messages
