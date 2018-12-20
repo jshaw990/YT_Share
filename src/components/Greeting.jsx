@@ -5,29 +5,29 @@ export default class Greeting extends React.Component {
         super(props);
 
         this.state = {
-            username: '',
+            currentMember: '',
             userID: ''
         };
-        this.setUser = this.setUser.bind(this);
     }
 
-    setUser(value) {
-        this.setState({
-            username: value,
-            userID: Math.random.toString(36).substring(7)
-        })
+    setUser(event) {
+        this.setState({currentMember: event.target.value})
+        this.setState({ userID: Math.random.toString(36).substring(7) })
+    }
+
+    onSubmit(event) {
     }
 
     render() {
-        const { username, userID } = this.state;
+        const { currentMember, userID } = this.state;
         return( 
             <form onSubmit={this.setUser}>
                 <input
                     type="text" placeholder="Enter your Username"
-                    onChange={(event) => {this.setUser(event.target.value)}}
-                    value={this.state.username}
+                    value={this.state.currentMember}
+                    onChange={this.setUser.bind(this)}
                 />
-                <button onClick={() => {this.submit()}}>Submit</button>
+                <button onClick={() => {this.onSubmit()}}>Submit</button>
             </form>
         )
     }

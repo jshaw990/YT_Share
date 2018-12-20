@@ -86,7 +86,9 @@ class App extends Component {
         <header className="App-header">
           <TopNav />
         </header>
-        <Greeting />
+        <Greeting
+        currentMember={this.state.member}
+        />
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
         <VideoPlayer video={this.state.selectedVideo} />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
