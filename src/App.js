@@ -35,7 +35,8 @@ class App extends Component {
       member: {
         username: randomName(),
         color: randomColor()
-      }
+      },
+      room: 'default'
     };
     this.drone = new window.Scaledrone('ZiDPD6E9oCpQ5i3I', {
       data: this.state.member
@@ -48,8 +49,9 @@ class App extends Component {
       member.id = this.drone.clientId;
       this.setState({member});
     });
-    const room = this.drone.subscribe("observable-room");
+    const room = this.drone.subscribe("observable-"+ this.state.room);
     room.on('data', (data, member) => {
+      console.log("room: " + this.state.room)
       if (!data.type){
       const messages = this.state.messages;
       messages.push({member, text: data});
@@ -80,19 +82,19 @@ class App extends Component {
 
   onSendMessage = (message) => {
     this.drone.publish({
-      room: "observable-room",
+      room: "observable-"+ this.state.room,
       message
     });
   }
 
   sendVideoSearch = (message) => {
-    this.drone.publish({room: "observable-room", message })
+    this.drone.publish({room: "observable-"+ this.state.room, message })
   }
   
   handleVideoStateChange = ({ data, target }) => {
     const time = target.getCurrentTime();
     this.drone.publish({
-      room: "observable-room",
+      room: "observable-"+ this.state.room,
       message: {
         type: "videoStateChange",
         time
@@ -119,7 +121,10 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <TopNav />
+          <TopNav 
+          room={this.state.room}
+          member={this.state.member}
+          />
         </header>
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
         <VideoPlayer
