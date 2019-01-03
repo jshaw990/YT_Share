@@ -49,10 +49,16 @@ class App extends Component {
     });
     const room = this.drone.subscribe("observable-room");
     room.on('data', (data, member) => {
+      if (!data.type){
+      const messages = this.state.messages;
+      messages.push({member, text: data});
+      this.setState({messages});
+      // console.log('messages: '+ messages, 'type: ' + data.type)
+    }
       if (
         member.clientData.username === this.state.member.username
       ) return;
-      console.log('DATA', data)
+      // console.log('DATA', data)
       if (data.type === "videoSearch") {
         const { videos, selectedVideo } = data;
         return this.setState({
@@ -65,9 +71,7 @@ class App extends Component {
         if (!this.player || typeof this.player.seekTo !== 'function') return;
         return this.player.seekTo(data.time)
       }
-      const messages = this.state.messages;
-      messages.push({member, text: data});
-      this.setState({messages});
+     
     });
 
     this.videoSearch('React Tutorials');
@@ -107,7 +111,7 @@ class App extends Component {
   }
 
    videoReady = ({ target }) => {
-     console.log('TARGET RTEADY', target)
+     console.log('TARGET READY', target)
       this.player = target;
    }
   render() {
