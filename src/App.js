@@ -6,7 +6,8 @@ import VideoList from './components/VideoList.jsx';
 import VideoPlayer from './components/VideoPlayer';
 import './style/App.css';
 import Messages from "./Messages";
-import Input from "./Input"
+import Input from "./Input";
+import Greeting from './components/Greeting.jsx';
 
 require('dotenv').config();
 
@@ -18,6 +19,11 @@ function randomName() {
   const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   const noun = nouns[Math.floor(Math.random() * nouns.length)];
   return adjective + noun;
+}
+
+function randomNum() {
+  let ranNum = Math.random.toString(36).substring(7);
+  return ranNum;
 }
 
 function randomColor() {
@@ -45,7 +51,9 @@ class App extends Component {
       }
       const member = {...this.state.member};
       member.id = this.drone.clientId;
+      if (!member) {
       this.setState({member});
+      }
     });
     const room = this.drone.subscribe("observable-room");
     room.on('data', (data, member) => {
@@ -70,7 +78,7 @@ class App extends Component {
       this.setState({messages});
     });
 
-    this.videoSearch('React Tutorials');
+    this.videoSearch('James Bond');
   }
 
   onSendMessage = (message) => {
@@ -116,6 +124,9 @@ class App extends Component {
         <header className="App-header">
           <TopNav />
         </header>
+        <Greeting
+        currentMember={this.state.member}
+        />
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
         <VideoPlayer
           video={this.state.selectedVideo}
