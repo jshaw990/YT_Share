@@ -19,20 +19,11 @@ const VideoPlayer = (props) => {
       };
 
     return (
-<<<<<<< HEAD
-        <YouTube
-            videoId={videoId}
-            opts={opts}
-            onStateChange={props.onStateChange}
-            onReady={props.onReady}
-      />
-=======
         <div className="video-detail">
             <div className="embed-responsive embed-responsive-16by9">
                 <iframe className="embed-responsive-item" src={url}></iframe>
             </div>
         </div>
->>>>>>> session
     );
 };
 
