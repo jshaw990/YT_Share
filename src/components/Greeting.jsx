@@ -21,7 +21,6 @@ export default class Greeting extends React.Component {
 
     onSubmit(event) {
         event.preventDefault();
-        alert('A name was submitted: ' + this.state.username);
     }
 
     render() {

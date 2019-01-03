@@ -21,11 +21,6 @@ function randomName() {
   return adjective + noun;
 }
 
-function randomNum() {
-  let ranNum = Math.random.toString(36).substring(7);
-  return ranNum;
-}
-
 function randomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
@@ -122,21 +117,21 @@ class App extends Component {
         <header className="App-header">
           <TopNav />
         </header>
-        <Greeting
-        currentMember={this.state.member}
-        />
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
         <VideoPlayer
           video={this.state.selectedVideo}
           onStateChange={this.handleVideoStateChange}
           onReady={this.videoReady}  
-        />
+          />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
-          videos={this.state.videos} />
+          videos={this.state.videos} 
+          />
         <Messages
           messages={this.state.messages}
-          currentMember={this.state.member}/>
-        <Input onSendMessage={this.onSendMessage}/>  
+          currentMember={this.state.member}
+          />
+        <Input onSendMessage={this.onSendMessage} 
+          />  
       </div>
     );
   }
