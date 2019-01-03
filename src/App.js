@@ -6,7 +6,8 @@ import VideoList from './components/VideoList.jsx';
 import VideoPlayer from './components/VideoPlayer';
 import './style/App.css';
 import Messages from "./Messages";
-import Input from "./Input"
+import Input from "./Input";
+import Greeting from './components/Greeting.jsx';
 
 require('dotenv').config();
 
@@ -74,7 +75,7 @@ class App extends Component {
      
     });
 
-    this.videoSearch('React Tutorials');
+    this.videoSearch('James Bond');
   }
 
   onSendMessage = (message) => {
@@ -125,13 +126,16 @@ class App extends Component {
           video={this.state.selectedVideo}
           onStateChange={this.handleVideoStateChange}
           onReady={this.videoReady}  
-        />
+          />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
-          videos={this.state.videos} />
+          videos={this.state.videos} 
+          />
         <Messages
           messages={this.state.messages}
-          currentMember={this.state.member}/>
-        <Input onSendMessage={this.onSendMessage}/>  
+          currentMember={this.state.member}
+          />
+        <Input onSendMessage={this.onSendMessage} 
+          />  
       </div>
     );
   }
