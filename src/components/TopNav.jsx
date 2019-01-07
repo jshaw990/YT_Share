@@ -18,8 +18,6 @@ export default class TopNav extends React.Component {
     super(props);
     
     this.toggle = this.toggle.bind(this);
-    this.createRoom = this.createRoom.bind(this)
-    this.joinRoom = this.joinRoom.bind(this)
     
     this.state = {
       isOpen: false,
@@ -32,14 +30,8 @@ export default class TopNav extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
-  createRoom() {
-    this.setState({room: this.state.member.username})
-    console.log('room:' + this.state.room, 'member:' + this.state.member.username)
-  }
-  joinRoom(event) {
-    if (event.key === "Enter"){
-    this.setState({room: event.target.value
-    })}
+  onSubmit(event) {
+    event.preventDefault();
   }
   render() {
     return (
@@ -49,14 +41,14 @@ export default class TopNav extends React.Component {
           <NavbarToggler onClick={this.toggle} />
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <Form>
+                <Form onSubmit={this.onSubmit}>
                   <FormGroup>
-                    <Input type="text" placeholder="Search for a Session" value={this.state.value} onKeyDown={this.joinRoom}/>
+                    <Input type="text" placeholder="Search for a Session" value={this.state.value} onKeyDown={this.props.joinRoom}/>
                   </FormGroup>
                 </Form>
               </NavItem>
               <NavItem>
-                <Button onClick={this.createRoom}>Create a Session</Button>
+                <Button onClick={this.props.createRoom}>Create a Session</Button>
               </NavItem>
             </Nav>
         </Navbar>

@@ -1,23 +1,6 @@
 import React from 'react';
 
 export default class Greeting extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         member: {
-    //             username: this.props.member
-    //         }
-    //     };
-    //     this.setUser = this.setUser.bind(this);
-    // }
-
-    // setUser(event) {
-    //     let member = Object.assign({}, this.state.member);
-    //     member.username = '';
-    //     this.setState({ member: { username: event.target.value }})
-    //     // this.setUser.bind(this)
-    // }
-
     onSubmit(event) {
         event.preventDefault();
     }

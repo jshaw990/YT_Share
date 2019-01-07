@@ -62,7 +62,7 @@ class App extends Component {
         member.clientData.id === this.state.member.id
       ) return;
       // console.log('DATA', data)
-      if (data.type === "videoSearch") {
+      if (data.type === "videoSearch" && this.state.member === this.state.room) {
         const { videos, selectedVideo } = data;
         return this.setState({
           videos,
@@ -120,14 +120,24 @@ class App extends Component {
      console.log('TARGET READY', target)
       this.player = target;
    }
-  
-
-
   setUser = (event) => {
       let member = Object.assign({}, this.state.member);
       member.username = event.target.value;
       this.setState({ member })
       // this.setUser.bind(this)
+  }
+  createRoom = () => {
+    let room = this.state.member.username;
+    this.setState({ room })
+    // this.setState({room: this.props.member})
+    console.log('room:' + this.state.room, 'member:' + this.props.member)
+  }
+  joinRoom = (event) => {
+    if (event.key === "Enter"){
+    let room = event.target.value;
+    this.setState({ room })
+    console.log('room:' + this.state.room, 'member:' + this.props.member)
+    }
   }
   render() {
     return (
@@ -136,6 +146,8 @@ class App extends Component {
           <TopNav 
           room={this.state.room}
           member={this.state.member}
+          createRoom={this.createRoom}
+          joinRoom={this.joinRoom}
           />
         </header>
         <Greeting 
