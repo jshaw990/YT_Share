@@ -24,7 +24,7 @@ class Messages extends Component {
         />
         <div className="Message-content">
           <div className="username">
-            {member.clientData.username}
+            {member.username}
           </div>
           <div className="text">{text}</div>
         </div>

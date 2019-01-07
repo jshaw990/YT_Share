@@ -54,12 +54,12 @@ class App extends Component {
       console.log("room: " + this.state.room)
       if (!data.type){
       const messages = this.state.messages;
-      messages.push({member, text: data});
+      messages.push(data);
       this.setState({messages});
       // console.log('messages: '+ messages, 'type: ' + data.type)
     }
       if (
-        member.clientData.username === this.state.member.username
+        member.clientData.id === this.state.member.id
       ) return;
       // console.log('DATA', data)
       if (data.type === "videoSearch") {
@@ -80,10 +80,13 @@ class App extends Component {
     this.videoSearch('James Bond');
   }
 
-  onSendMessage = (message) => {
+  onSendMessage = (text) => {
     this.drone.publish({
       room: "observable-"+ this.state.room,
-      message
+      message: {
+        text,
+        member: this.state.member
+      }
     });
   }
 
@@ -117,6 +120,15 @@ class App extends Component {
      console.log('TARGET READY', target)
       this.player = target;
    }
+  
+
+
+  setUser = (event) => {
+      let member = Object.assign({}, this.state.member);
+      member.username = event.target.value;
+      this.setState({ member })
+      // this.setUser.bind(this)
+  }
   render() {
     return (
       <div className="App">
@@ -126,6 +138,10 @@ class App extends Component {
           member={this.state.member}
           />
         </header>
+        <Greeting 
+          username={this.state.member.username}
+          setUser={this.setUser}
+          />
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
         <VideoPlayer
           video={this.state.selectedVideo}
