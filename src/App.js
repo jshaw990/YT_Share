@@ -131,12 +131,14 @@ class App extends Component {
     this.setState({ room })
     // this.setState({room: this.props.member})
     console.log('room:' + this.state.room, 'member:' + this.props.member)
+    this.drone.subscribe("observable-"+ this.state.room);
   }
   joinRoom = (event) => {
     if (event.key === "Enter"){
     let room = event.target.value;
     this.setState({ room })
     console.log('room:' + this.state.room, 'member:' + this.props.member)
+    this.drone.subscribe("observable-"+ this.state.room);
     }
   }
   render() {
