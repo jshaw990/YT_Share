@@ -7,6 +7,11 @@ import VideoPlayer from './components/VideoPlayer';
 import './style/App.css';
 import Messages from "./Messages";
 import ChatMessage from "./Input";
+import {
+  Container,
+  Row,
+  Col 
+} from 'reactstrap';
 
 require('dotenv').config();
 
@@ -123,7 +128,6 @@ class App extends Component {
     YTSearch({ key: API_KEY, term: searchTerm }, (data) => {
       const searchData = {
         videos: data,
-        // selectedVideo: data[0]
       };
       this.setState(searchData);
       searchData.type = "videoSearch"
@@ -159,6 +163,7 @@ class App extends Component {
   }
   render() {
     return (
+      <Container>
       <div className="App">
         <header className="App-header">
           <TopNav
@@ -170,7 +175,10 @@ class App extends Component {
             joinRoom={this.joinRoom}
           />
         </header>
-        <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
+        <br></br>
+        <Row>
+          <Col sm="12" md="7" lg="7" className="videoArea">
+          <div>
         <VideoPlayer
           video={this.state.selectedVideo}
           onStateChange={this.handleVideoStateChange}
@@ -178,16 +186,27 @@ class App extends Component {
           member={this.state.member.username}
           room={this.state.room.name}
         />
-        <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
-          videos={this.state.videos}
-        />
+        </div>
+          <div className="chatArea">
+          <ChatMessage onSendMessage={this.onSendMessage}
+          />
         <Messages
           messages={this.state.messages}
           currentMember={this.state.member}
         />
-        <ChatMessage onSendMessage={this.onSendMessage}
+        </div>
+        </Col>
+        <Col sm="12" md="5" lg="5" className="searchArea">
+        <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
+        <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
+          videos={this.state.videos}
         />
+        </Col>
+        </Row>
+        <Row>
+        </Row>
       </div>
+      </Container>
     );
   }
 }

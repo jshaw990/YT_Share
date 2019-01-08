@@ -1,23 +1,16 @@
 #top {
     background-color: lightgray;
 }
-
 #root {
     width: 95%;
     margin: auto;
     padding: 0px;
     background-color: white;
 }
-
 .video-detail {
     width: 10%;
     margin: auto;
-    padding: 10px 5px;
-}
-
-.list-group {
-    width: 50%;
-    margin: right;
+    padding: 10px 0px;
 }
 .NavText {
     color: white;
@@ -27,5 +20,18 @@
     text-align: left;
 }
 .SearchBar {
-    width: 50%;
+    width: 100%;
+    text-align: center;
+}
+.roomName {
+    color: white;
+}
+.videoArea {
+    border: 1px solid black;
+}
+.searchArea {
+    border: 1px solid green;
+}
+.chatArea {
+    border: 1px solid red;
 }

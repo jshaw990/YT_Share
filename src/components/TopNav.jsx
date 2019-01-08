@@ -47,6 +47,9 @@ export default class TopNav extends React.Component {
                     value={this.props.username}
                     onChange={this.props.setUser}
                 />
+              <span className="roomName">
+                Current Room: {this.props.room.name}
+              </span>
               </FormGroup>
             </Form>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
