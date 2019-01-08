@@ -203,8 +203,11 @@ class App extends Component {
         </Col>
         <Col sm="12" md="5" lg="5" className="searchArea">
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
-        <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
+        <VideoList 
+          onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
           videos={this.state.videos}
+          member={this.state.member.username}
+          room={this.state.room.name}
         />
         </Col>
         </Row>
