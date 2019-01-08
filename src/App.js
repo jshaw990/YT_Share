@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import './style/App.css';
 import TopNav from './components/TopNav';
 import SearchBar from './components/SearchBar.jsx';
 import YTSearch from 'youtube-api-search';
 import VideoList from './components/VideoList.jsx';
 import VideoPlayer from './components/VideoPlayer';
-import './style/App.css';
 import Messages from "./Messages";
 import ChatMessage from "./Input";
 import {
@@ -177,13 +177,8 @@ class App extends Component {
         </header>
         <br></br>
         <Row>
-          <Col sm="12" md="7" lg="7" className="videoArea">
-          <div>
-        <SearchBar
-        onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} 
-        member={this.state.member.username}
-        room={this.state.room.name}
-        />
+          <Col sm="12" md="12" lg="7">
+          <div className="videoArea">
         <VideoPlayer
           video={this.state.selectedVideo}
           onStateChange={this.handleVideoStateChange}
@@ -198,11 +193,16 @@ class App extends Component {
         <Messages
           messages={this.state.messages}
           currentMember={this.state.member}
+          color={this.state.member.color}
         />
         </div>
         </Col>
-        <Col sm="12" md="5" lg="5" className="searchArea">
-        <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
+        <Col sm="12" md="12" lg="5" className="searchArea">
+        <SearchBar
+        onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} 
+        member={this.state.member.username}
+        room={this.state.room.name}
+        />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
           videos={this.state.videos}
         />

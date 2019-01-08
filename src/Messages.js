@@ -2,6 +2,7 @@ import {Component} from "react";
 import React from "react";
 
 class Messages extends Component {
+  
   render() {
     const {messages} = this.props;
     return (
@@ -19,10 +20,11 @@ class Messages extends Component {
     return (
       <p className={className}>
         <div className="Message-content">
-          <div className="username">
-            {member.username}
-          </div>
-          <div className="text">{text}</div>
+          <span className="messageUsername" style={{color: this.props.color}}>
+            {member.username}: 
+          </span>
+          <span> </span>
+          <span className="messageText">{text}</span>
         </div>
         <hr></hr>
       </p>
