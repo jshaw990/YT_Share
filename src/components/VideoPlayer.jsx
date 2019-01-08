@@ -8,8 +8,8 @@ const VideoPlayer = (props) => {
         return <div>Loading Video...</div>;
     }
     if (props.member === props.room) {
-    const videoId = video.id.videoId;
-    const url = `https://www.youtube.com/embed/${videoId}`;
+        const videoId = video.id.videoId;
+        const url = `https://www.youtube.com/embed/${videoId}`;
 
         const opts = {
             height: '390',
@@ -19,18 +19,18 @@ const VideoPlayer = (props) => {
                 controls: 1
             }
         };
-    return (
-        <YouTube
-            videoId={videoId}
-            opts={opts}
-            onStateChange={props.onStateChange}
-            onReady={props.onReady}
-        />
-    );
-}
-else{
-    const videoId = video.id.videoId;
-    const url = `https://www.youtube.com/embed/${videoId}`;
+        return (
+            <YouTube
+                videoId={videoId}
+                opts={opts}
+                onStateChange={props.onStateChange}
+                onReady={props.onReady}
+            />
+        );
+    }
+    else {
+        const videoId = video.id.videoId;
+        const url = `https://www.youtube.com/embed/${videoId}`;
 
         const opts = {
             height: '390',
@@ -41,14 +41,14 @@ else{
                 disablekb: 1
             }
         };
-    return (
-        <YouTube
-            videoId={videoId}
-            opts={opts}
-            onStateChange={props.onStateChange}
-            onReady={props.onReady}
-        />
-    );
-}};
-
+        return (
+            <YouTube
+                videoId={videoId}
+                opts={opts}
+                onStateChange={props.onStateChange}
+                onReady={props.onReady}
+            />
+        );
+    }
+};
 export default VideoPlayer;
