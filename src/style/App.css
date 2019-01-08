@@ -26,3 +26,17 @@
 .roomName {
     color: white;
 }
+.videoArea {
+    position:relative;
+    padding-bottom:63%;
+    padding-top:30px;
+    height:0;
+    overflow:hidden;
+}
+.videoArea VideoPlayer {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
