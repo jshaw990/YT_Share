@@ -128,6 +128,7 @@ class App extends Component {
     YTSearch({ key: API_KEY, term: searchTerm }, (data) => {
       const searchData = {
         videos: data,
+        selectedVideo: data[0]
       };
       this.setState(searchData);
       searchData.type = "videoSearch"
