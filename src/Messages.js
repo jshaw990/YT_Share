@@ -6,7 +6,7 @@ class Messages extends Component {
     const {messages} = this.props;
     return (
       <ul className="Messages-list">
-        {messages.map(m => this.renderMessage(m))}
+        {messages.slice(0).reverse().map(m => this.renderMessage(m))}
       </ul>
     );
   }
