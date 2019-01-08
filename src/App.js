@@ -36,8 +36,13 @@ class App extends Component {
         username: randomName(),
         color: randomColor()
       },
-      room: 'default'
+      room: {
+        name: 'default'
+      }
     };
+  }
+
+  componentDidMount() {
     this.drone = new window.Scaledrone('ZiDPD6E9oCpQ5i3I', {
       data: this.state.member
     });
@@ -45,24 +50,36 @@ class App extends Component {
       if (error) {
         return console.error(error);
       }
-      const member = {...this.state.member};
+      const member = { ...this.state.member };
       member.id = this.drone.clientId;
-      this.setState({member});
+      this.setState({ member });
     });
-    const room = this.drone.subscribe("observable-"+ this.state.room);
-    room.on('data', (data, member) => {
-      console.log("room: " + this.state.room)
-      if (!data.type){
-      const messages = this.state.messages;
-      messages.push(data);
-      this.setState({messages});
-      // console.log('messages: '+ messages, 'type: ' + data.type)
-    }
+
+    this.initRoom();
+
+    this.videoSearch('James Bond');
+  }
+
+  initRoom = (name) => {
+    if (this.room) this.room.unsubscribe();
+    this.room = this.drone.subscribe("observable-" + (name || this.state.room.name));
+    
+    const newState = {  messages: [] };
+    this.setState(newState);
+
+    this.room.on('data', (data, member) => {
+      // console.log(this.room, member)
+      if (!data.type) {
+        const messages = this.state.messages;
+        messages.push(data);
+        this.setState({ messages });
+        // console.log('messages: '+ messages, 'type: ' + data.type)
+      }
       if (
         member.clientData.id === this.state.member.id
       ) return;
       // console.log('DATA', data)
-      if (data.type === "videoSearch" && this.state.member === this.state.room) {
+      if (data.type === "videoSearch") {
         const { videos, selectedVideo } = data;
         return this.setState({
           videos,
@@ -70,40 +87,41 @@ class App extends Component {
         })
       }
 
-      if (data.type === "videoStateChange") {
+      if (data.type === "videoStateChange" && this.state.member.username !== this.state.room.name) {
         if (!this.player || typeof this.player.seekTo !== 'function') return;
         return this.player.seekTo(data.time)
       }
-     
-    });
-
-    this.videoSearch('James Bond');
+    })
   }
 
   onSendMessage = (text) => {
     this.drone.publish({
-      room: "observable-"+ this.state.room,
+      room: "observable-" + this.state.room.name,
       message: {
         text,
         member: this.state.member
       }
     });
+    // console.log('message: ' + text, 'room: ' + this.state.room.name)
   }
 
   sendVideoSearch = (message) => {
-    this.drone.publish({room: "observable-"+ this.state.room, message })
-  }
-  
+    if (this.state.member.username === this.state.room.name){
+    this.drone.publish({ room: "observable-" + this.state.room.name, message })
+  }}
+
   handleVideoStateChange = ({ data, target }) => {
+    console.log(data)
+    if (this.state.member.username === this.state.room.name){
     const time = target.getCurrentTime();
     this.drone.publish({
-      room: "observable-"+ this.state.room,
+      room: "observable-" + this.state.room.name,
       message: {
         type: "videoStateChange",
         time
       }
     })
-  }
+  }}
   videoSearch(searchTerm) {
     YTSearch({ key: API_KEY, term: searchTerm }, (data) => {
       const searchData = {
@@ -116,61 +134,62 @@ class App extends Component {
     });
   }
 
-   videoReady = ({ target }) => {
-     console.log('TARGET READY', target)
-      this.player = target;
-   }
+  videoReady = ({ target }) => {
+    console.log('TARGET READY', target)
+    this.player = target;
+  }
   setUser = (event) => {
-      let member = Object.assign({}, this.state.member);
-      member.username = event.target.value;
-      this.setState({ member })
-      // this.setUser.bind(this)
+    let member = Object.assign({}, this.state.member);
+    member.username = event.target.value;
+    this.setState({ member })
   }
   createRoom = () => {
-    let room = this.state.member.username;
+    let room = Object.assign({}, this.state.room)
+    room.name = this.state.member.username;
     this.setState({ room })
-    // this.setState({room: this.props.member})
-    console.log('room:' + this.state.room, 'member:' + this.props.member)
-    this.drone.subscribe("observable-"+ this.state.room);
+    // console.log('room:' + this.state.room.name, 'member:' + this.state.member.username)
+
+    this.initRoom(room.name)
   }
   joinRoom = (event) => {
-    if (event.key === "Enter"){
-    let room = event.target.value;
-    this.setState({ room })
-    console.log('room:' + this.state.room, 'member:' + this.props.member)
-    this.drone.subscribe("observable-"+ this.state.room);
+    if (event.key === "Enter") {
+      let room = Object.assign({}, this.state.room)
+      room.name = event.target.value;
+      this.setState({ room })
+      // console.log('room:' + this.state.room.name, 'member:' + this.state.member.username)
+      this.initRoom(room.name)
     }
   }
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <TopNav 
-          room={this.state.room}
-          member={this.state.member}
-          createRoom={this.createRoom}
-          joinRoom={this.joinRoom}
+          <TopNav
+            room={this.state.room}
+            member={this.state.member}
+            createRoom={this.createRoom}
+            joinRoom={this.joinRoom}
           />
         </header>
-        <Greeting 
+        <Greeting
           username={this.state.member.username}
           setUser={this.setUser}
-          />
+        />
         <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} />
         <VideoPlayer
           video={this.state.selectedVideo}
           onStateChange={this.handleVideoStateChange}
-          onReady={this.videoReady}  
-          />
+          onReady={this.videoReady}
+        />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
-          videos={this.state.videos} 
-          />
+          videos={this.state.videos}
+        />
         <Messages
           messages={this.state.messages}
           currentMember={this.state.member}
-          />
-        <Input onSendMessage={this.onSendMessage} 
-          />  
+        />
+        <Input onSendMessage={this.onSendMessage}
+        />
       </div>
     );
   }

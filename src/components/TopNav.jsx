@@ -6,7 +6,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   Form,
   FormGroup,
   Input,
@@ -21,7 +20,7 @@ export default class TopNav extends React.Component {
     
     this.state = {
       isOpen: false,
-      room: this.props.room,
+      room: this.props.room.name,
       member: this.props.member
     };
   }
