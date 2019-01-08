@@ -205,6 +205,8 @@ class App extends Component {
         />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
           videos={this.state.videos}
+          member={this.state.member.username}
+          room={this.state.room.name}
         />
         </Col>
         </Row>
