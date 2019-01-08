@@ -26,12 +26,3 @@
 .roomName {
     color: white;
 }
-.videoArea {
-    border: 1px solid black;
-}
-.searchArea {
-    border: 1px solid green;
-}
-.chatArea {
-    border: 1px solid red;
-}
