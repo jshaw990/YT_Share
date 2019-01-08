@@ -1,6 +1,7 @@
 import '../style/App.css';
 import React from 'react';
 import {
+  Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -9,6 +10,7 @@ import {
   Form,
   FormGroup,
   Input,
+  FormText,
   Button
 } from 'reactstrap';
 
@@ -16,17 +18,16 @@ export default class TopNav extends React.Component {
   constructor(props) {
     super(props);
     
-    this.toggle = this.toggle.bind(this);
-    
+    this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      isOpen: false,
+      collapsed: true, 
       room: this.props.room.name,
       member: this.props.member
     };
   }
-  toggle() {
+  toggleNavbar() {
     this.setState({
-      isOpen: !this.state.isOpen
+      collapsed: !this.state.collapsed
     });
   }
   onSubmit(event) {
@@ -35,21 +36,34 @@ export default class TopNav extends React.Component {
   render() {
     return (
       <div className="TopNav">
-        <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="/">YT Share</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <Form onSubmit={this.onSubmit}>
-                  <FormGroup>
-                    <Input type="text" placeholder="Search for a Session" value={this.state.value} onKeyDown={this.props.joinRoom}/>
-                  </FormGroup>
-                </Form>
-              </NavItem>
-              <NavItem>
-                <Button onClick={this.props.createRoom}>Create a Session</Button>
-              </NavItem>
-            </Nav>
+        <Navbar color="dark" className="navbar-dark">
+          <NavbarBrand href="/"className="mr-auto">YT Share</NavbarBrand>
+            <Form onSubmit={this.onSubmit}>
+              <FormGroup>
+                <FormText className="userNameHelp">Enter your Username</FormText>
+                <Input
+                    className="userNameInput"
+                    type="text" 
+                    value={this.props.username}
+                    onChange={this.props.setUser}
+                />
+              </FormGroup>
+            </Form>
+          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+            <Collapse isOpen={!this.state.collapsed} navbar>
+              <Nav navbar>
+                <NavItem>
+                  <Form onSubmit={this.onSubmit}>
+                    <FormGroup>
+                      <Input type="text" placeholder="Search for a Session" value={this.state.value} onKeyDown={this.props.joinRoom}/>
+                    </FormGroup>
+                  </Form>
+                </NavItem>
+                <NavItem>
+                  <Button onClick={this.props.createRoom}>Create a Session</Button>
+                </NavItem>
+              </Nav>
+            </Collapse>
         </Navbar>
       </div>
     );
