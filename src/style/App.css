@@ -19,3 +19,13 @@
     width: 50%;
     margin: right;
 }
+.NavText {
+    color: white;
+}
+.userNameHelp{
+    color: White;
+    text-align: left;
+}
+.SearchBar {
+    width: 50%;
+}

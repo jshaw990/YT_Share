@@ -1,4 +1,9 @@
 import React from 'react';
+import { 
+    Form, 
+    FormGroup,
+    Input
+} from 'reactstrap';
 
 class SearchBar extends React.Component {
     constructor(props){
@@ -22,12 +27,12 @@ class SearchBar extends React.Component {
     render() {
         return (
             <div className="SearchBar">
-                <input
-                    placeholder="Search YouTube"
-                    value={this.state.term}
-                    onChange={this.onInputChange}
-                    onKeyDown={this.onEnter.bind(this)}
-                />
+                        <Input
+                            placeholder="Search YouTube"
+                            value={this.state.term}
+                            onChange={this.onInputChange}
+                            onKeyDown={this.onEnter.bind(this)}
+                        />
             </div>
         );
     }
