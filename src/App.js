@@ -126,7 +126,7 @@ class App extends Component {
     YTSearch({ key: API_KEY, term: searchTerm }, (data) => {
       const searchData = {
         videos: data,
-        selectedVideo: data[0]
+        // selectedVideo: data[0]
       };
       this.setState(searchData);
       searchData.type = "videoSearch"
@@ -180,6 +180,8 @@ class App extends Component {
           video={this.state.selectedVideo}
           onStateChange={this.handleVideoStateChange}
           onReady={this.videoReady}
+          member={this.state.member.username}
+          room={this.state.room.name}
         />
         <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
           videos={this.state.videos}
