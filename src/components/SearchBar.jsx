@@ -25,14 +25,16 @@ class SearchBar extends React.Component {
     }
 
     render() {
+        const isAdmin = this.props.member === this.props.room;
         return (
             <div className="SearchBar">
-                        <Input
-                            placeholder="Search YouTube"
-                            value={this.state.term}
-                            onChange={this.onInputChange}
-                            onKeyDown={this.onEnter.bind(this)}
-                        />
+            {isAdmin && (
+                <Input
+                    placeholder="Search YouTube"
+                    value={this.state.term}
+                    onChange={this.onInputChange}
+                    onKeyDown={this.onEnter.bind(this)}
+                />)}
             </div>
         );
     }

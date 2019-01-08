@@ -179,6 +179,11 @@ class App extends Component {
         <Row>
           <Col sm="12" md="7" lg="7" className="videoArea">
           <div>
+        <SearchBar
+        onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} 
+        member={this.state.member.username}
+        room={this.state.room.name}
+        />
         <VideoPlayer
           video={this.state.selectedVideo}
           onStateChange={this.handleVideoStateChange}
