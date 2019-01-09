@@ -168,12 +168,13 @@ class App extends Component {
       this.initRoom(room.name)
     }
   }
-  skipCount = (event) => {
-    let count = Object.assign({}, this.state.room);
-    count.skipCount = this.state.room.skipCount
-        this.setState((prevState) => ({
-        skipCount: prevState.room.skipCount + 1,
-    }));
+  skipCount = () => {
+    let room = Object.assign({}, this.state.room);
+    room.skipCount = this.state.room
+        this.setState(( prevState, { room }) => ({
+          skipCount: this.state.room.skipCount + 1
+        }));
+    console.log("Skip", this.state.room)
   }
   render() {
     return (
