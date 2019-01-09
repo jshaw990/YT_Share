@@ -2,7 +2,7 @@
     background-color: lightgray;
 }
 #root {
-    width: 95%;
+    width: 85%;
     margin: auto;
     padding: 0px;
     background-color: white;
@@ -39,7 +39,4 @@
     left:0;
     width:100%;
     height:100%;
-}
-Alert {
-    width: 50%;
 }

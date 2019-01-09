@@ -1,0 +1,35 @@
+import React from 'react';
+import { 
+    Button,
+    Tooltip
+} from 'reactstrap';
+
+export default class Buttons extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            tooltipOpen: false,
+        };
+    }
+
+    toggle() {
+        this.setState({
+            tooltipOpen: !this.state.tooltipOpen
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <Button outline color="secondary"># Users in Session</Button>
+                <Button outline color="secondary">Vote to Skip</Button>
+                <Button outline color="secondary" id="videoURL">Video URL</Button>
+                <Tooltip placement="right" isOpen={this.state.tooltipOpen} autohide={false} target="videoURL" toggle={this.toggle}>
+                    https://youtu.be/{this.props.selectedVideo}
+                </Tooltip>
+            </div>
+        )
+    }
+}
