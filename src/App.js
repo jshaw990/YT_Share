@@ -44,7 +44,8 @@ class App extends Component {
         color: randomColor()
       },
       room: {
-        name: 'default'
+        name: 'default',
+        skipCount: 0
       }
     };
   }
@@ -167,6 +168,13 @@ class App extends Component {
       this.initRoom(room.name)
     }
   }
+  skipCount = (event) => {
+    let count = Object.assign({}, this.state.room);
+    count.skipCount = this.state.room.skipCount
+        this.setState((prevState) => ({
+        skipCount: prevState.room.skipCount + 1,
+    }));
+  }
   render() {
     return (
       <Container>
@@ -194,7 +202,12 @@ class App extends Component {
         />
         </div>
           <div className="chatArea">
-          <Buttons selectedVideo={this.state.selectedVideo.id.videoId} /> <br></br>
+          <Buttons 
+            selectedVideo={this.state.selectedVideo.id.videoId}
+            skip={this.state.room.skipCount} 
+            skipCount={this.skipCount}  
+          /> 
+          <br></br>
           <ChatMessage onSendMessage={this.onSendMessage}
           />
         <Messages
