@@ -23,7 +23,6 @@ function randomName() {
   const ranNum = Math.floor(1000 + Math.random() * 9000);
   return user + ranNum;
 }
-
 function randomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
@@ -48,7 +47,6 @@ class App extends Component {
       }
     };
   }
-
   componentDidMount() {
     this.drone = new window.Scaledrone('ZiDPD6E9oCpQ5i3I', {
       data: this.state.member
@@ -61,9 +59,7 @@ class App extends Component {
       member.id = this.drone.clientId;
       this.setState({ member });
     });
-
     this.initRoom();
-
     this.videoSearch('James Bond');
   }
 
@@ -72,7 +68,6 @@ class App extends Component {
     this.room = this.drone.subscribe("observable-" + (name || this.state.room.name));
     const newState = {  messages: [] };
     this.setState(newState);
-
     let members = []
     this.room.on('members', m => {
       members = m;
@@ -81,13 +76,15 @@ class App extends Component {
     this.room.on('member_join', member => {
       members.push(member);
       this.setState({members})
-     });
+      if (this.state.member.username === this.state.room.name){
+        this.updateMember()
+      }
+    });
     this.room.on('member_leave', ({id}) => {
       const index = members.findIndex(member => member.id === id);
       members.splice(index, 1);
       this.setState({members})
      });
-
     this.room.on('data', (data, member) => {
       if (!data.type) {
         const messages = this.state.messages;
@@ -97,21 +94,39 @@ class App extends Component {
       if (
         member.clientData.id === this.state.member.id
       ) return;
-      if (data.type === "videoSearch") {
-        const { videos, selectedVideo } = data;
-        return this.setState({
+      if (data.type === "videoChange") {
+        const { videos, selectedVideo, time } = data;
+        this.setState({
           videos,
           selectedVideo
+        }, () => {
+          console.log("selected video done!", time);
+          setTimeout(() => {
+            if (time) return this.player.seekTo(time);
+          }, 0)
         })
       }
-
+      if (data.type === "requestVideoSync" && this.state.member.username === this.state.room.name) {
+        this.updateMember();
+      }
       if (data.type === "videoStateChange" && this.state.member.username !== this.state.room.name) {
         if (!this.player || typeof this.player.seekTo !== 'function') return;
         return this.player.seekTo(data.time)
       }
     })
   }
-
+  updateMember = () => {
+    const { videos, selectedVideo } = this.state;
+    this.drone.publish({
+      room: "observable-" + this.state.room.name,
+      message: {
+        videos,
+        selectedVideo,
+        type: 'videoChange',
+        time: this.player.getCurrentTime()
+      }
+    });
+  }
   onSendMessage = (text) => {
     this.drone.publish({
       room: "observable-" + this.state.room.name,
@@ -121,12 +136,10 @@ class App extends Component {
       }
     });
   }
-
   sendVideoSearch = (message) => {
     if (this.state.member.username === this.state.room.name){
     this.drone.publish({ room: "observable-" + this.state.room.name, message })
   }}
-
   handleVideoStateChange = ({ data, target }) => {
     if (this.state.member.username === this.state.room.name){
     const time = target.getCurrentTime();
@@ -145,11 +158,23 @@ class App extends Component {
         selectedVideo: data[0]
       };
       this.setState(searchData);
-      searchData.type = "videoSearch"
+      searchData.type = "videoChange"
       this.sendVideoSearch(searchData)
     });
   }
-
+  handleVideoChange = selectedVideo => {
+    this.setState({ selectedVideo });
+    if (this.state.member.username === this.state.room.name) {
+      this.drone.publish({
+        room: "observable-" + this.state.room.name,
+        message: {
+          type: "videoChange",
+          selectedVideo,
+          videos: this.state.videos,
+        }
+      });
+    }
+  }
   videoReady = ({ target }) => {
     console.log('TARGET READY', target)
     this.player = target;
@@ -163,8 +188,6 @@ class App extends Component {
     let room = Object.assign({}, this.state.room)
     room.name = this.state.member.username;
     this.setState({ room })
-    // console.log('room:' + this.state.room.name, 'member:' + this.state.member.username)
-
     this.initRoom(room.name)
   }
   joinRoom = (event) => {
@@ -172,8 +195,18 @@ class App extends Component {
       let room = Object.assign({}, this.state.room)
       room.name = event.target.value;
       this.setState({ room })
-      // console.log('room:' + this.state.room.name, 'member:' + this.state.member.username)
       this.initRoom(room.name)
+    }
+  }
+
+  onSync = () => {
+    if (this.state.member.username !== this.state.room.name) {
+      this.drone.publish({
+        room: "observable-" + this.state.room.name,
+        message: {
+          type: "requestVideoSync",
+        }
+      });
     }
   }
   render() {
@@ -203,7 +236,11 @@ class App extends Component {
         />
         </div>
           <div className="chatArea">
-          <Buttons selectedVideo={this.state.selectedVideo.id.videoId} /> <br></br>
+          <Buttons 
+            selectedVideo={this.state.selectedVideo.id.videoId} 
+            members={this.state.members.length}
+            onSync={this.onSync}
+          /> <br></br>
           <ChatMessage onSendMessage={this.onSendMessage}
           />
         <Messages
@@ -219,7 +256,7 @@ class App extends Component {
         member={this.state.member.username}
         room={this.state.room.name}
         />
-        <VideoList onVideoSelect={userSelected => this.setState({ selectedVideo: userSelected })}
+        <VideoList onVideoSelect={this.handleVideoChange}
           videos={this.state.videos}
           member={this.state.member.username}
           room={this.state.room.name}
