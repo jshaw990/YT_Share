@@ -20,11 +20,14 @@ export default class TopNav extends React.Component {
     
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      collapsed: true, 
+      collapsed: false, 
       room: this.props.room.name,
-      member: this.props.member
+      member: this.props.member,
+      roomColor: '#ffffff'
     };
+    this.roomColor();
   }
+
   toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed
@@ -32,6 +35,14 @@ export default class TopNav extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
+  }
+
+  roomColor = () => {
+    if(this.props.username === this.props.room.name) {
+      this.setState ({roomColor: '#008000'})
+    } else {
+      this.setState ({roomColor: '#ffff00'})
+    }
   }
   render() {
     return (
@@ -48,7 +59,11 @@ export default class TopNav extends React.Component {
                     onChange={this.props.setUser}
                 />
               <span className="roomName">
-                Current Room: {this.props.room.name}
+                Current Session:
+              </span>
+              <span> </span>
+              <span className="admin" style={{color: this.state.roomColor}}>
+                {this.props.room.name}
               </span>
               </FormGroup>
             </Form>

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './style/App.css';
 import TopNav from './components/TopNav';
-import SearchBar from './components/SearchBar.jsx';
+import SearchBar from './components/SearchBar';
 import YTSearch from 'youtube-api-search';
-import VideoList from './components/VideoList.jsx';
+import VideoList from './components/VideoList';
 import VideoPlayer from './components/VideoPlayer';
 import Messages from "./Messages";
 import ChatMessage from "./Input";
+import Buttons from './components/Buttons';
 import {
   Container,
   Row,
@@ -31,7 +32,11 @@ class App extends Component {
     super(props);
     this.state = {
       videos: [],
-      selectedVideo: null,
+      selectedVideo: {
+        id: {
+          videoId: ''
+        }
+      },
       messages: [],
       members: [],
       member: {
@@ -198,6 +203,7 @@ class App extends Component {
         />
         </div>
           <div className="chatArea">
+          <Buttons selectedVideo={this.state.selectedVideo.id.videoId} /> <br></br>
           <ChatMessage onSendMessage={this.onSendMessage}
           />
         <Messages
