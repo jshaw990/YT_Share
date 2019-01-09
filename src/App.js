@@ -26,7 +26,6 @@ function randomName() {
 function randomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
-let members = []
 class App extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +33,7 @@ class App extends Component {
       videos: [],
       selectedVideo: null,
       messages: [],
+      members: [],
       member: {
         username: randomName(),
         color: randomColor()
@@ -65,22 +65,33 @@ class App extends Component {
   initRoom = (name) => {
     if (this.room) this.room.unsubscribe();
     this.room = this.drone.subscribe("observable-" + (name || this.state.room.name));
-    
     const newState = {  messages: [] };
     this.setState(newState);
 
+    let members = []
+    this.room.on('members', m => {
+      members = m;
+      this.setState({members})
+     });
+    this.room.on('member_join', member => {
+      members.push(member);
+      this.setState({members})
+     });
+    this.room.on('member_leave', ({id}) => {
+      const index = members.findIndex(member => member.id === id);
+      members.splice(index, 1);
+      this.setState({members})
+     });
+
     this.room.on('data', (data, member) => {
-      // console.log(this.room, member)
       if (!data.type) {
         const messages = this.state.messages;
         messages.push(data);
         this.setState({ messages });
-        // console.log('messages: '+ messages, 'type: ' + data.type)
       }
       if (
         member.clientData.id === this.state.member.id
       ) return;
-      // console.log('DATA', data)
       if (data.type === "videoSearch") {
         const { videos, selectedVideo } = data;
         return this.setState({
@@ -104,7 +115,6 @@ class App extends Component {
         member: this.state.member
       }
     });
-    // console.log('message: ' + text, 'room: ' + this.state.room.name)
   }
 
   sendVideoSearch = (message) => {
@@ -113,7 +123,6 @@ class App extends Component {
   }}
 
   handleVideoStateChange = ({ data, target }) => {
-    console.log(data)
     if (this.state.member.username === this.state.room.name){
     const time = target.getCurrentTime();
     this.drone.publish({
