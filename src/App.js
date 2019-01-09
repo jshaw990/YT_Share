@@ -43,7 +43,8 @@ class App extends Component {
         color: randomColor()
       },
       room: {
-        name: 'default'
+        name: 'default',
+        skipCount: 0
       }
     };
   }
@@ -198,7 +199,6 @@ class App extends Component {
       this.initRoom(room.name)
     }
   }
-
   onSync = () => {
     if (this.state.member.username !== this.state.room.name) {
       this.drone.publish({
@@ -208,6 +208,14 @@ class App extends Component {
         }
       });
     }
+  }
+  skipCount = () => {
+    let room = Object.assign({}, this.state.room);
+    room.skipCount = this.state.room
+        this.setState(( prevState, { room }) => ({
+          skipCount: this.state.room.skipCount + 1
+        }));
+    console.log("Skip", this.state.room)
   }
   render() {
     return (
@@ -240,7 +248,10 @@ class App extends Component {
             selectedVideo={this.state.selectedVideo.id.videoId} 
             members={this.state.members.length}
             onSync={this.onSync}
-          /> <br></br>
+            skip={this.state.room.skipCount} 
+            skipCount={this.skipCount}  
+          />
+          <br></br>
           <ChatMessage onSendMessage={this.onSendMessage}
           />
         <Messages
