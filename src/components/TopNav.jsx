@@ -37,7 +37,7 @@ export default class TopNav extends React.Component {
     event.preventDefault();
   }
 
-  roomColor =() => {
+  roomColor = () => {
     if(this.props.username === this.props.room.name) {
       this.setState ({roomColor: '#008000'})
     } else {
