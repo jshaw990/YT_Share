@@ -15,7 +15,7 @@ const VideoPlayer = (props) => {
             height: '390',
             width: '640',
             playerVars: { // https://developers.google.com/youtube/player_parameters
-                autoplay: 0,
+                autoplay: 1,
                 controls: 1
             }
         };
@@ -36,7 +36,7 @@ const VideoPlayer = (props) => {
             height: '390',
             width: '640',
             playerVars: { // https://developers.google.com/youtube/player_parameters
-                autoplay: 0,
+                autoplay: 1,
                 controls: 0,
                 disablekb: 1
             }
