@@ -7,32 +7,37 @@
     * ReactStrap
 * Back End:
     * JavaScript
-    * Knex
-* Database
-    * PSQL
 * Deployment
-    * TBD
+    * Heroku
 
 ### APIs Utilized
-
+* [YouTube](https://developers.google.com/youtube/iframe_api_reference)
+* [YouTube Search](https://github.com/ibrahimtelman/youtube-api-search)
+* [Scaledrone](https://www.scaledrone.com/?utm_expid=.RqLoQ5d1RMyKZ2N4mkDs6Q.0&utm_referrer=)
 
 ## Authors
 * [Cam Gehmlich](https://github.com/cgehmlich)
 * [Jayden Shaw](https://github.com/jshaw990)
 
-## Getting Started
-
 ## Setup
+* Clone the Github
+* Run ``` NPM install ``` in your terminal to instal the dependencies
+* Run ``` npm start ``` to launch the program
+* Navigate to ``` http://localhost:3000 ```
 
 ### Dependencies
-* [Express](https://www.npmjs.com/package/express)
-* [React](https://www.npmjs.com/package/react)
-* [React DOM](https://www.npmjs.com/package/react-dom)
-* [ws](https://www.npmjs.com/package/ws)
+* [Body-parser](https://github.com/expressjs/body-parser)
+* [Bootstrap](https://github.com/twbs/bootstrap)
+* [Dotenv](https://github.com/motdotla/dotenv)
+* [jQuery](https://github.com/jquery/jquery)
+* [React](https://github.com/facebook/react)
+* [Reactstrap](https://github.com/reactstrap/reactstrap)
+* [Youtube API Search](https://github.com/ibrahimtelman/youtube-api-search)
 
 ## Screenshots
 
 ## Known Issues/Bugs
+* Video Player on Mobile does not size correctly
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details
