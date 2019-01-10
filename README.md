@@ -36,7 +36,7 @@ YT Share is a platform which allows the sharing of YouTube videos across multipl
 * [Youtube API Search](https://github.com/ibrahimtelman/youtube-api-search)
 
 ## Screenshots
-![YTshare]()
+![YTshare](https://github.com/jshaw990/YT_Share/blob/master/public/YTshare.png?raw=true)
 
 ## Known Issues/Bugs
 * Video Player on Mobile does not size correctly
