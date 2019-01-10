@@ -1,5 +1,6 @@
-# Final Project
+# YT Share
 
+YT Share is a platform which allows the sharing of YouTube videos across multiple users with syncronized videos, and time stamps. Realtime updating chat allows users to communicate with one another, while enjoying videos together.  
 
 ### Our Tech Stack
 * Front End:
