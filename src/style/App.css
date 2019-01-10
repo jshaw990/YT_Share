@@ -3,6 +3,7 @@
 }
 #root {
     width: 95%;
+    height: 100%;
     margin: auto;
     padding: 0px;
     background-color: lightgray;
@@ -45,5 +46,11 @@
     height:100%;
 }
 .sessionBar {
-    width: 195px;
+    width: 193px;
+    margin-right: 64px;
+    float: right;
+}
+.createSession {
+    width: 193px;
+    margin-right: 64px;
 }

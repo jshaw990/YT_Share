@@ -22,7 +22,7 @@ export default class Buttons extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="buttons">
                 <Button outline color="danger" onClick={this.props.onSync}>Sync with Host</Button>
                 <Button outline color="danger">{this.props.members} Users in Session</Button>
                 <Button outline color="danger" id="videoURL">Video URL</Button>
