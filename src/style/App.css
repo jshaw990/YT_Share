@@ -2,11 +2,15 @@
     background-color: lightgray;
 }
 #root {
-    width: 85%;
+    width: 95%;
     margin: auto;
     padding: 0px;
+    background-color: lightgray;
+}
+.App {
     background-color: white;
 }
+
 .video-detail {
     width: 10%;
     margin: auto;
@@ -41,6 +45,5 @@
     height:100%;
 }
 .sessionBar {
-    width: 43%;
-    float: right;
+    width: 195px;
 }

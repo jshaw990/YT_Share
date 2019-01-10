@@ -23,9 +23,9 @@ export default class Buttons extends React.Component {
     render() {
         return (
             <div>
-                <Button outline color="secondary" onClick={this.props.onSync}>Sync with Host</Button>
-                <Button outline color="secondary">{this.props.members} Users in Session</Button>
-                <Button outline color="secondary" id="videoURL">Video URL</Button>
+                <Button outline color="danger" onClick={this.props.onSync}>Sync with Host</Button>
+                <Button outline color="danger">{this.props.members} Users in Session</Button>
+                <Button outline color="danger" id="videoURL">Video URL</Button>
                 <Tooltip placement="right" isOpen={this.state.tooltipOpen} autohide={false} target="videoURL" toggle={this.toggle}>
                     https://youtu.be/{this.props.selectedVideo}
                 </Tooltip>

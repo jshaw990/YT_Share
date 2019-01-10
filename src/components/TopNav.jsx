@@ -53,7 +53,7 @@ export default class TopNav extends React.Component {
           <NavbarBrand href="/"className="mr-auto">
             <img 
                 src={logo}
-                width="160"
+                width="350"
                 height="100"
                 className="d-inine-block alight-top"
                 alt="YTshare"
@@ -80,16 +80,14 @@ export default class TopNav extends React.Component {
             </Form>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse isOpen={!this.state.collapsed} navbar>
-              <Nav navbar className="navbar-nav text-right">
+              <Nav navbar className="float-right">
                 <NavItem>
-                  <Form onSubmit={this.onSubmit}>
+                  <Form inline onSubmit={this.onSubmit}>
                     <FormGroup className="sessionBar">
                       <Input type="text" placeholder="Search for a Session" value={this.state.value} onKeyDown={this.props.joinRoom}/>
                     </FormGroup>
+                  <Button color="danger" onClick={this.props.createRoom}>Create a Session</Button>
                   </Form>
-                </NavItem>
-                <NavItem>
-                  <Button onClick={this.props.createRoom}>Create a Session</Button>
                 </NavItem>
               </Nav>
             </Collapse>
