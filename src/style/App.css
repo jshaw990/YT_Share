@@ -15,8 +15,8 @@
 .NavText {
     color: white;
 }
-.userNameHelp{
-    color: White;
+.text-muted {
+    color: White !important;
     text-align: left;
 }
 .SearchBar {
@@ -39,4 +39,8 @@
     left:0;
     width:100%;
     height:100%;
+}
+.sessionBar {
+    width: 43%;
+    float: right;
 }

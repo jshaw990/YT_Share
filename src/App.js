@@ -43,8 +43,7 @@ class App extends Component {
         color: randomColor()
       },
       room: {
-        name: 'default',
-        skipCount: 0
+        name: 'Default'
       }
     };
   }
@@ -61,7 +60,7 @@ class App extends Component {
       this.setState({ member });
     });
     this.initRoom();
-    this.videoSearch('James Bond');
+    this.videoSearch('React.js');
   }
 
   initRoom = (name) => {
@@ -209,14 +208,6 @@ class App extends Component {
       });
     }
   }
-  skipCount = () => {
-    let room = Object.assign({}, this.state.room);
-    room.skipCount = this.state.room
-        this.setState(( prevState, { room }) => ({
-          skipCount: this.state.room.skipCount + 1
-        }));
-    console.log("Skip", this.state.room)
-  }
   render() {
     return (
       <Container>
@@ -248,8 +239,6 @@ class App extends Component {
             selectedVideo={this.state.selectedVideo.id.videoId} 
             members={this.state.members.length}
             onSync={this.onSync}
-            skip={this.state.room.skipCount} 
-            skipCount={this.skipCount}  
           />
           <br></br>
           <ChatMessage onSendMessage={this.onSendMessage}
@@ -262,6 +251,7 @@ class App extends Component {
         </div>
         </Col>
         <Col sm="12" md="12" lg="5" className="searchArea">
+        <br></br>
         <SearchBar
         onSearchTermChange={searchTerm => this.videoSearch(searchTerm)} 
         member={this.state.member.username}

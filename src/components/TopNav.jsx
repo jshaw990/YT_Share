@@ -20,7 +20,7 @@ export default class TopNav extends React.Component {
     
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      collapsed: false, 
+      collapsed: true, 
       room: this.props.room.name,
       member: this.props.member,
       roomColor: '#ffffff'
@@ -51,6 +51,7 @@ export default class TopNav extends React.Component {
           <NavbarBrand href="/"className="mr-auto">YT Share</NavbarBrand>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
+                <br></br>
                 <FormText className="userNameHelp">Enter your Username</FormText>
                 <Input
                     className="userNameInput"
@@ -69,10 +70,10 @@ export default class TopNav extends React.Component {
             </Form>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse isOpen={!this.state.collapsed} navbar>
-              <Nav navbar>
+              <Nav navbar className="navbar-nav text-right">
                 <NavItem>
                   <Form onSubmit={this.onSubmit}>
-                    <FormGroup>
+                    <FormGroup className="sessionBar">
                       <Input type="text" placeholder="Search for a Session" value={this.state.value} onKeyDown={this.props.joinRoom}/>
                     </FormGroup>
                   </Form>
