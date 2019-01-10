@@ -1,4 +1,5 @@
 import '../style/App.css';
+import logo from '../components/logo.png';
 import React from 'react';
 import {
   Collapse,
@@ -13,6 +14,7 @@ import {
   FormText,
   Button
 } from 'reactstrap';
+
 
 export default class TopNav extends React.Component {
   constructor(props) {
@@ -48,7 +50,15 @@ export default class TopNav extends React.Component {
     return (
       <div className="TopNav">
         <Navbar color="dark" className="navbar-dark">
-          <NavbarBrand href="/"className="mr-auto">YT Share</NavbarBrand>
+          <NavbarBrand href="/"className="mr-auto">
+            <img 
+                src={logo}
+                width="160"
+                height="100"
+                className="d-inine-block alight-top"
+                alt="YTshare"
+            />
+          </NavbarBrand>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <br></br>
